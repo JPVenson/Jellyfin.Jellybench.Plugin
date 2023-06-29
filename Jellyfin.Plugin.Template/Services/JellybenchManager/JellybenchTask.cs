@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Jellyfin.Jellybench.Server.Shared;
 using MediaBrowser.Model.Tasks;
 
 namespace Jellyfin.Plugin.Template.Services.JellybenchManager;
@@ -38,7 +39,7 @@ public class JellybenchTask : IScheduledTask
         var dataRequest = await httpResponseMessage.Content.ReadFromJsonAsync<JellybenchRequest>((JsonSerializerOptions?)null, cancellationToken).ConfigureAwait(false)!;
 
         var result = new List<JellybenchResultDataPoint>();
-        for (var index = 0; index < dataRequest.DataPoints.Length; index++)
+        for (var index = 0; index < dataRequest?.DataPoints?.Length; index++)
         {
             var jellybenchDataPoint = dataRequest.DataPoints[index];
             progress.Report(dataRequest.DataPoints.Length / 100D * index / 100D);
@@ -50,7 +51,7 @@ public class JellybenchTask : IScheduledTask
         var jellyfinResult = new JellybenchResult();
         // TODO fill result properties
         jellyfinResult.DataPoints = result.ToArray();
-        jellyfinResult.DataRequestKey = dataRequest.RequestKey;
+        jellyfinResult.DataRequestKey = dataRequest?.RequestKey;
         await httpClient.PostAsJsonAsync("/api/jellybench/Results", jellyfinResult, cancellationToken).ConfigureAwait(false);
     }
 
