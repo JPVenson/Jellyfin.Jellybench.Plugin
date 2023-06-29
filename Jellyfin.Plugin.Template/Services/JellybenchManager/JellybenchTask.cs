@@ -5,20 +5,24 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Jellyfin.Plugin.Template.Services.JellybenchSteps;
 using MediaBrowser.Model.Tasks;
 
 namespace Jellyfin.Plugin.Template.Services.JellybenchManager;
 
+/// <inheritdoc/>
 public class JellybenchTask : IScheduledTask
 {
-    public string Name => "Jellybench Task";
+    /// <inheritdoc/>
+    public string Name => "JellyBench";
 
-    public string Key => "JellybenchTask";
+    /// <inheritdoc/>
+    public string Key => "JellyBench";
 
-    public string Description => throw new NotImplementedException();
+    /// <inheritdoc/>
+    public string Description => "Transcoding benchmark tool.";
 
-    public string Category => throw new NotImplementedException();
+    /// <inheritdoc/>
+    public string Category => "Benchmark";
 
     /// <summary>
     /// Runs the Scheduled task to evaluate the current capabilities of the system.
@@ -34,17 +38,17 @@ public class JellybenchTask : IScheduledTask
         var dataRequest = await httpResponseMessage.Content.ReadFromJsonAsync<JellybenchRequest>((JsonSerializerOptions?)null, cancellationToken).ConfigureAwait(false)!;
 
         var result = new List<JellybenchDataPointResult>();
-        for (var index = 0; index < dataRequest.DataPoints.Length; index++)
+        for (var index = 0; index < dataRequest!.DataPoints!.Length; index++)
         {
             var jellybenchDataPoint = dataRequest.DataPoints[index];
             progress.Report(dataRequest.DataPoints.Length / 100D * index / 100D);
-            //TODO obtain jellybench.ExampleDataUrl or load from cache
-            //TODO invoke ffmpeg and load result into JellybenchDataPointResult
-            //TODO add as many parallel ffmpeg tasks every 10 sec as long as the individial framerate stays over 24fps
+            // TODO obtain jellybench.ExampleDataUrl or load from cache
+            // TODO invoke ffmpeg and load result into JellybenchDataPointResult
+            // TODO add as many parallel ffmpeg tasks every 10 sec as long as the individial framerate stays over 24fps
         }
 
         var jellyfinResult = new JellybenchResult();
-        //TODO fill result properties
+        // TODO fill result properties
         jellyfinResult.DataPoints = result.ToArray();
         jellyfinResult.DataRequestKey = dataRequest.RequestKey;
         await httpClient.PostAsJsonAsync("/api/jellybench/Results", jellyfinResult, cancellationToken).ConfigureAwait(false);

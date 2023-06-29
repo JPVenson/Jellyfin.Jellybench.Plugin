@@ -6,17 +6,26 @@ using MediaBrowser.Model.Tasks;
 
 namespace Jellyfin.Plugin.Template.Services.JellybenchManager;
 
+/// <inheritdoc/>
 public class JellybenchManagerService : IJellybenchManagerService
 {
+    /// <summary>
+    /// The report containing details about the benchmark.
+    /// </summary>
+    public const string JellybenchReport = "./Jellybench-Report.json";
+
     private readonly ITaskManager _taskManager;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="JellybenchManagerService"/> class.
+    /// </summary>
+    /// <param name="taskManager">task manager service.</param>
     public JellybenchManagerService(ITaskManager taskManager)
     {
         _taskManager = taskManager;
     }
 
-    public const string JellybenchReport = "./Jellybench-Report.json";
-
+    /// <inheritdoc/>
     public bool HasReport
     {
         get
@@ -25,11 +34,13 @@ public class JellybenchManagerService : IJellybenchManagerService
         }
     }
 
+    /// <inheritdoc/>
     public void RunReport()
     {
         _taskManager.Execute<JellybenchTask>();
     }
 
+    /// <inheritdoc/>
     public string ReadReport()
     {
         return File.ReadAllText(JellybenchReport);
