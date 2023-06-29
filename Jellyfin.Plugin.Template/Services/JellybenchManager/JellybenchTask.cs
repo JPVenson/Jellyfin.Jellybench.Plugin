@@ -33,7 +33,7 @@ public class JellybenchTask : IScheduledTask
         var httpResponseMessage = await httpClient.GetAsync($"/api/jellybench/PrepareDataPoints", cancellationToken).ConfigureAwait(false);
         var dataRequest = await httpResponseMessage.Content.ReadFromJsonAsync<JellybenchRequest>((JsonSerializerOptions?)null, cancellationToken).ConfigureAwait(false)!;
 
-        var result = new List<JellybenchDataPointResult>();
+        var result = new List<JellybenchResultDataPoint>();
         for (var index = 0; index < dataRequest.DataPoints.Length; index++)
         {
             var jellybenchDataPoint = dataRequest.DataPoints[index];
