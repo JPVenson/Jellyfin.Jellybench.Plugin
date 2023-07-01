@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Jellyfin.Jellybench.Server.Shared;
 using MediaBrowser.Model.Tasks;
 
-namespace Jellyfin.Plugin.Template.Services.JellybenchManager;
+namespace Jellyfin.Plugin.Template.ScheduledTasks;
 
 /// <inheritdoc/>
 public class JellybenchTask : IScheduledTask
