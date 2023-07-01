@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Jellyfin.Plugin.Template.Factories;
 using Jellyfin.Plugin.Template.Services.JellybenchManager;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,10 +21,10 @@ namespace Jellyfin.Plugin.Template.Controller
         /// <summary>
         /// Initializes a new instance of the <see cref="JellybenchApiController"/> class.
         /// </summary>
-        /// <param name="jellybenchManagerService">Jellyfin benchmark service.</param>
-        public JellybenchApiController(IJellybenchManagerService jellybenchManagerService)
+        /// <param name="serviceProvider">Jellyfin benchmark service.</param>
+        public JellybenchApiController(IServiceProvider serviceProvider)
         {
-            _jellybenchManagerService = jellybenchManagerService;
+            _jellybenchManagerService = new JellybenchManagerFactory(serviceProvider).Create();
         }
 
         /// <summary>
