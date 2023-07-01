@@ -58,6 +58,6 @@ public class JellybenchTask : IScheduledTask
     /// <inheritdoc />
     public IEnumerable<TaskTriggerInfo> GetDefaultTriggers()
     {
-        return new[] { new TaskTriggerInfo() { Type = "OnDemand" } };
+        return (IEnumerable<TaskTriggerInfo>)Array.Empty<object>();
     }
 }
