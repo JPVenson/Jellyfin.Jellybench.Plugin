@@ -2,6 +2,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Jellyfin.Plugin.Template.ScheduledTasks;
 using MediaBrowser.Model.Tasks;
 
 namespace Jellyfin.Plugin.Template.Services.JellybenchManager;
