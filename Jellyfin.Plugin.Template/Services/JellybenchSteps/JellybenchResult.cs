@@ -49,12 +49,12 @@ public record JellybenchResult
     /// <summary>
     /// Gets or sets jellyfin config directory storage type.
     /// </summary>
-    public StorageType JellyfinConfigDirectoryDiscType { get; set; }
+    public StorageType JellyfinConfigDirectoryStorageType { get; set; }
 
     /// <summary>
     /// Gets or sets jellyfin media directory storage type.
     /// </summary>
-    public StorageType JellyfinMediaDirectoryDiscType { get; set; }
+    public StorageType JellyfinMediaDirectoryStorageType { get; set; }
 
     /// <summary>
     /// Gets or sets data request key.
